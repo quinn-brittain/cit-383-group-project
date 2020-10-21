@@ -9,7 +9,6 @@ import subprocess
 import csv  # import csv module
 import datetime
 import os
-import sys
 
 
 def readLinuxData(filename):
