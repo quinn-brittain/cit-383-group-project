@@ -5,13 +5,13 @@ and outputs the collected data to a csv file
 Authors: Jin Nagai, Quinn Brittain
 """
 
-import subprocess
 import csv  # import csv module
 import datetime
 import os
+import subprocess
 
 
-def readLinuxData(filename):
+def read_linux_data(filename):
     """Reads data from a passwd or group file into a dictionary of lists
 
     ### Args:
@@ -32,7 +32,7 @@ def readLinuxData(filename):
     return rows
 
 
-def readCSVData(filename):
+def read_csv_data(filename):
     """Reads data from a csv file into a dictionary of lists
 
     ### Args:
@@ -56,7 +56,7 @@ def readCSVData(filename):
     return {'headers': headers, 'rows': rows}
 
 
-def writeUsers(users, filename):
+def write_users(users, filename):
     """Writes a 2D list of users into a file in csv format
 
     ### Args:
@@ -82,7 +82,7 @@ def writeUsers(users, filename):
         file.write("Total Users,{}\n\n".format(count))
 
 
-def writeGroups(groups, filename):
+def write_groups(groups, filename):
     """Writes a 2D list of groups into a file in csv format
 
     ### Args:
@@ -116,13 +116,13 @@ def main():
     groups = []
 
     try:
-        users = readLinuxData('/etc/passwd')
+        users = read_linux_data('/etc/passwd')
     except FileNotFoundError:
         print("Error: File not found: '/etc/passwd'")
     except PermissionError:
         print("Error: Permission denied: Read access denied for '/etc/passwd'")
     try:
-        groups = readLinuxData('/etc/group')
+        groups = read_linux_data('/etc/group')
     except FileNotFoundError:
         print("Error: File not found: '/etc/group'")
     except PermissionError:
@@ -135,8 +135,8 @@ def main():
             file.write("Audit Started by: {}\n\n".format(os.getlogin()))
             file.write("==Network==\n")
             file.write("{}\n\n".format(network.stdout))
-        writeUsers(users, filename)
-        writeGroups(groups, filename)
+        write_users(users, filename)
+        write_groups(groups, filename)
     except PermissionError:
         print("Error: Unable to create output file: Write access denied for '{}'".format(os.getcwd))
 
